@@ -9801,14 +9801,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68081fe93b1241749a5bce028c22e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  attractionForce: 5
-  attractionRadius: 2.5
+  rb: {fileID: 8872089556883255371}
+  attractionForce: 15
+  attractionRadius: 10
   lifetime: 3
   spawnParticles: {fileID: 7286234833579794252, guid: 6b2edad9dc12a4b48b8131f6b9cf84d2, type: 3}
   audio: {fileID: -2332861966176490731}
   torusShot: {fileID: 8300000, guid: bebc805490b775347b1273a3803f912b, type: 3}
   torusProjectile: {fileID: 8300000, guid: a94f753ec5445284c9a3b9ec0b3a67e9, type: 3}
+  attractable:
+    serializedVersion: 2
+    m_Bits: 512
+  enemy:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!64 &4074500225716512105
 MeshCollider:
   m_ObjectHideFlags: 0

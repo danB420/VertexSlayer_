@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4853568486692942762}
   - component: {fileID: 7165456593894134486}
   - component: {fileID: 1942931340323355422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ExplosiveCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,10 +109,11 @@ MonoBehaviour:
   onCollide: {fileID: 8300000, guid: 1d11d7d40a1c2c344a806878effa3f8a, type: 3}
   rb: {fileID: 0}
   renderer: {fileID: 0}
-  damage: 10
+  damage: 50
   explosionRadius: 5
   explosionDelay: 2
   explosionForce: 5
+  enemyLayerId: 8
 --- !u!82 &-2801993710145706753
 AudioSource:
   m_ObjectHideFlags: 0

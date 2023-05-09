@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,15 +19,19 @@ public class Gun : MonoBehaviour
    [Header("Gun Stats")]
    public float timeBetweenShooting, spread, reloadTime, fireRate;
    public int magazine, bulletsPerShot;
+   public int dmg;
 
+   
    public bool automatic;
 
    private int bulletsLeft, bulletsShot;
 
    private bool shooting, readyToShoot, reloading;
+  private  Vector3 targetPos=new Vector3(0,0,0);
 
    public Camera Cam;
    public Transform shootingPos;
+   public WeaponManager _wepManager;
 
    //bug fixing
    public bool allowInvoke = true;
@@ -36,11 +41,17 @@ public class Gun : MonoBehaviour
       bulletsLeft = magazine;
       readyToShoot = true;
       audio = GetComponent<AudioSource>();
+      _wepManager = GameObject.Find("WeaponManager").GetComponent<WeaponManager>();
    }
 
    private void Update()
    {
+     
       ShootingInput();
+      _wepManager.currentAmmo = bulletsLeft;
+      _wepManager.clipSize = magazine;
+      _wepManager.reloading = reloading;
+
    }
 
    private void ShootingInput()
@@ -66,25 +77,23 @@ public class Gun : MonoBehaviour
    private void Shoot()
    {
       readyToShoot = false;
-
-      Ray ray = Cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-      Vector3 targetPos;
+      
+      
       RaycastHit hit;
-      if (Physics.Raycast(ray, out hit))
+      if (Physics.Raycast(shootingPos.position,shootingPos.forward,out hit,200f))
       {
          targetPos = hit.point;
       }
-      else targetPos = ray.GetPoint(75);
-
       Vector3 dir = targetPos - shootingPos.position;
-      float xSpread = Random.Range(-spread*0.5f, spread*0.5f);
+
+         float xSpread = Random.Range(-spread*0.5f, spread*0.5f);
       float ySpread = Random.Range(-spread*0.5f, spread*0.5f);
 
-      Vector3 dirWithSpread = dir + new Vector3(xSpread, ySpread, 0);
+      
 
       GameObject currentBullet = Instantiate(bullet, shootingPos.position, Quaternion.identity);
-      currentBullet.transform.forward = dirWithSpread.normalized;
-      currentBullet.GetComponent<Rigidbody>().AddForce(dirWithSpread.normalized * shootForce, ForceMode.Impulse);
+      currentBullet.transform.forward = dir;
+      currentBullet.GetComponent<Rigidbody>().AddForce(dir.normalized * shootForce, ForceMode.Impulse);
       currentBullet.GetComponent<Rigidbody>().AddForce(Cam.transform.up * upwardForce, ForceMode.Impulse);
 
       bulletsLeft--;
@@ -98,7 +107,7 @@ public class Gun : MonoBehaviour
 
       if (bulletsShot < bulletsPerShot && bulletsLeft > 0)
          Invoke("Shoot", fireRate);
-      Debug.Log("SHOT");
+      
 
    }
 
@@ -113,7 +122,7 @@ public class Gun : MonoBehaviour
       audio.PlayOneShot(reloadAudio);
       reloading = true;
       Invoke("ReloadFinished",reloadTime);
-      Debug.Log("Reloading");
+      
       
    }
 
@@ -121,6 +130,6 @@ public class Gun : MonoBehaviour
    {
       bulletsLeft = magazine;
       reloading = false;
-      Debug.Log("Done");
+     
    }
 }

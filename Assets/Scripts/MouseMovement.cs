@@ -10,6 +10,8 @@ public class MouseMovement : MonoBehaviour
     public Transform orientation;
     public Transform gun;
     
+    
+    
     private float mouseX;
     private float mouseY;
 
@@ -20,12 +22,15 @@ public class MouseMovement : MonoBehaviour
 
     public void Start()
     {
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     public void Update()
     {
+        transform.position = new Vector3(orientation.transform.position.x, orientation.transform.position.y + 1f,
+            orientation.transform.position.z);
         GetInput(); 
         RotatePlayer();
     }

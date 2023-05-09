@@ -16,10 +16,10 @@ TagManager:
   - whatIsPlayer
   - whatIsGround
   - whatIsEnemy
-  - 
-  - 
-  - 
-  - 
+  - whatIsAttractable
+  - PlayerProjectile
+  - EnemyProjectile
+  - DeathTrap
   - 
   - 
   - 
